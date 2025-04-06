@@ -521,4 +521,265 @@ body {
     .card-image {
         height: 250px;
     }
+}
+
+/* 다운로드 섹션 */
+.download-section {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 100%;
+}
+
+.magic-download-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    background: linear-gradient(135deg, 
+        var(--paladin-primary), 
+        var(--elf-primary), 
+        var(--assassin-primary), 
+        var(--dragon-primary), 
+        var(--doll-primary)
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 
+                0 0 20px rgba(255, 255, 255, 0.2),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    cursor: pointer;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.magic-circle {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L54 36 L90 14 L66 50 L90 86 L54 64 L50 100 L46 64 L10 86 L34 50 L10 14 L46 36 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    top: -25%;
+    left: -25%;
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+    z-index: -1;
+}
+
+.magic-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        transparent 70%);
+    filter: blur(15px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.download-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    fill: white;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.download-text {
+    position: relative;
+    z-index: 2;
+}
+
+/* 호버 효과 */
+.magic-download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(72, 52, 212, 0.9), rgba(48, 51, 107, 0.9));
+}
+
+.magic-download-btn:hover .magic-circle {
+    opacity: 1;
+    animation: rotate 10s linear infinite;
+}
+
+.magic-download-btn:hover .magic-glow {
+    opacity: 0.5;
+    animation: pulse 2s ease infinite;
+}
+
+.magic-download-btn:hover .download-icon {
+    transform: translateY(-2px);
+    animation: float 1s ease infinite alternate;
+}
+
+.magic-download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 애니메이션 키프레임 */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(-2px);
+    }
+    100% {
+        transform: translateY(2px);
+    }
+}
+
+/* 모바일 반응형 조정 */
+@media screen and (max-width: 768px) {
+    .magic-download-btn {
+        padding: 0.8rem 1.6rem;
+        font-size: 1.1rem;
+    }
+    
+    .download-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .magic-download-btn {
+        padding: 0.7rem 1.4rem;
+        font-size: 1rem;
+        width: 80%;
+    }
+    
+    .download-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 마법 파티클 효과 */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particles span {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+    animation: particles 3s linear infinite;
+    opacity: 0;
+}
+
+.particles span:nth-child(1) {
+    top: 50%;
+    left: 0%;
+    animation-delay: 0s;
+}
+
+.particles span:nth-child(2) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0.5s;
+}
+
+.particles span:nth-child(3) {
+    top: 80%;
+    left: 40%;
+    animation-delay: 1s;
+}
+
+.particles span:nth-child(4) {
+    top: 10%;
+    left: 60%;
+    animation-delay: 1.5s;
+}
+
+.particles span:nth-child(5) {
+    top: 70%;
+    left: 80%;
+    animation-delay: 2s;
+}
+
+.particles span:nth-child(6) {
+    top: 40%;
+    left: 100%;
+    animation-delay: 2.5s;
+}
+
+.magic-download-btn:hover .particles span {
+    opacity: 1;
+}
+
+@keyframes particles {
+    0% {
+        transform: scale(0) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2) translateX(-20px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.download-description {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    opacity: 0.8;
 } 
