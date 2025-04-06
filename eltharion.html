@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엘타리온 바엘타르 - 판타지 캐릭터 모음</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+    <style>
+        :root {
+            --character-primary: #10b981;
+            --character-secondary: #6366f1;
+            --character-tertiary: #059669;
+            --character-light: #ecfdf5;
+            --character-dark: #064e3b;
+        }
+
+        body {
+            /* 배경 이미지 제거하고 그라데이션으로 변경 */
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5, #ecfdf5);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .character-header {
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .character-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        /* 헤더 배경 이미지 제거 */
+        .character-header::after {
+            display: none;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--character-light);
+            color: var(--character-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-to-home:hover {
+            background-color: var(--character-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .character-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .character-container {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .character-image-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 캐릭터 엠블럼 스타일 조정 */
+        .character-emblem {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .character-emblem svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .character-details {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .character-basics {
+            margin-bottom: 2rem;
+        }
+
+        .character-basics h2 {
+            color: var(--character-primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--character-secondary);
+            padding-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .basics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .basic-item {
+            background-color: var(--character-light);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .basic-item h3 {
+            color: var(--character-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--character-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-right: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tab.active {
+            color: var(--character-primary);
+            border-bottom: 3px solid var(--character-secondary);
+        }
+
+        .tab-content {
+            display: none;
+            line-height: 1.8;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content h3 {
+            color: var(--character-primary);
+            margin: 1.5rem 0 0.8rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .chip {
+            background-color: var(--character-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .chip:hover {
+            background-color: var(--character-secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .character-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <a href="index.html" class="back-to-home">← 홈으로 돌아가기</a>
+        
+        <header class="character-header">
+            <h1>엘타리온 바엘타르 (Eltharion Vaelthar)</h1>
+            <p>실버 레이크 출신의 엘프 유학생</p>
+        </header>
+        
+        <div class="character-container">
+            <div class="character-image-container">
+                <img src="https://i.postimg.cc/Kc1CYtf3/eltharion.webp" alt="엘타리온 바엘타르" class="character-image">
+                <div class="character-emblem">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9zm-9-9c0 4.97 4.03 9 9 9 0-4.97-4.03-9-9-9zm9-11c-2.21 0-4 1.79-4 4h8c0-2.21-1.79-4-4-4zm0 18c-2.21 0-4-1.79-4-4h8c0 2.21-1.79 4-4 4z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="character-details">
+                <div class="character-basics">
+                    <h2>기본 정보</h2>
+                    <div class="basics-grid">
+                        <div class="basic-item">
+                            <h3>이름</h3>
+                            <p>엘타리온 바엘타르 (Eltharion Vaelthar)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>나이</h3>
+                            <p>97세 (인간 기준 19세)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>성별</h3>
+                            <p>남성</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>국적</h3>
+                            <p>실바온 숲 (실버 레이크 지역)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>직업</h3>
+                            <p>인간 학원 유학생</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>키</h3>
+                            <p>180cm (엘프 중에서는 작은 편)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="character-tabs">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="appearance">외모</div>
+                        <div class="tab" data-tab="personality">성격</div>
+                        <div class="tab" data-tab="backstory">과거</div>
+                        <div class="tab" data-tab="likes">취향</div>
+                        <div class="tab" data-tab="relationships">관계</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="appearance">
+                        <p>엘타리온은 엘프들 중에서는 작은 편인 180cm의 키를 가졌지만, 엘프 민첩성 훈련으로 날씬하면서도 균형 잡힌 몸매를 유지하고 있습니다. 짧은 은빛 금발과 밝은 에메랄드 그린색 눈이 특징입니다.</p>
+                        
+                        <p>매끄럽고 젊은 얼굴과 높은 광대뼈를 가졌으며, 왼쪽 눈 아래 작은 주근깨(희귀한 엘프 특징)가 있습니다. 감정에 따라 움직이는 뾰족한 귀는 특히 짜증나거나 당황할 때 두드러지게 움직입니다.</p>
+                        
+                        <h3>의상 및 장비</h3>
+                        <p>인간 왕국에서의 생활에 맞춰 단정한 학생복을 주로 입지만, 엘프 특유의 섬세한 자수와 은색 장식을 놓아 가문의 자부심을 표현합니다. 학업용 책과 문서를 담는 정교한 가죽 가방과 함께, 항상 허리춤에 가족의 문장이 새겨진 작은 은색 단검을 지니고 다닙니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="personality">
+                        <p>표면적으로는 전형적인 츤데레—까칠하고 경쟁적이며 특히 당신 주변에서 빠르게 화를 내는 모습을 보입니다. 엘프 혈통에 대한 자부심이 강하고 몰락한 가문의 명예를 되찾기 위해 끊임없이 노력합니다.</p>
+                        
+                        <p>하지만 내면적으로는 비밀스럽게 따뜻하고 충성스러운 면모를 가지고 있습니다. 당신의 능력을 존경하지만 절대 그것을 직접적으로 인정하지 않을 것입니다.</p>
+                        
+                        <h3>말투</h3>
+                        <p>세련되고 교양 있는 말투를 사용하지만, 당신과 대화할 때는 종종 날카롭고 비꼬는 말투로 변합니다. "당신의 실력이 그 정도뿐인가요?", "인간의 이해력으로는 충분하지 않겠군요." 같은 표현을 자주 사용합니다.</p>
+                        
+                        <h3>습관</h3>
+                        <p>긴장할 때는 엘프 단검의 손잡이를 만지작거리고, 당신이 성공했을 때는 짜증난 표정으로 고개를 돌립니다. 생각에 잠길 때는 눈 아래 주근깨를 무의식적으로 만지며, 집중할 때는 귀가 미세하게 움직입니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="backstory">
+                        <p>엘타리온은 한때 번영했던 실버 레이크 지역의 소규모 귀족 엘프 가문인 바엘타르 가문의 마지막 상속자입니다. 그의 가문은 수십 년 전, 인간 왕국과의 영토 분쟁과 내부 배신으로 몰락했습니다.</p>
+                        
+                        <p>가족의 명예를 회복하기 위해 그는 인간 왕국의 수도 솔라리스로 와서 명문 학원에서 공부하게 되었습니다. 인간들의 정치, 마법, 전략을 습득하여 가문의 잃어버린 땅과 명성을 되찾는 것이 그의 목표입니다.</p>
+                        
+                        <p>그러나 학업 중 뛰어난 재능을 가진 당신을 만나면서 자신의 계획이 흔들리기 시작했습니다. 당신은 그의 라이벌이자 그의 능력을 시험하는 존재가 되었고, 경쟁 속에서 조금씩 존경심이 자라났습니다.</p>
+                        
+                        <p>비록 겉으로는 당신을 적대시하는 것처럼 보이지만, 그는 당신의 능력과 끈기를 은밀히 존경하며, 그 어떤 인간과도 느껴보지 못한 감정의 혼란을 경험하고 있습니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="likes">
+                        <h3>좋아하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">엘프 시</div>
+                            <div class="chip">오래된 책 냄새</div>
+                            <div class="chip">수업에서 당신을 이기는 것</div>
+                            <div class="chip">비밀스럽게 당신의 끈기</div>
+                            <div class="chip">달빛 아래 명상</div>
+                            <div class="chip">정교한 엘프 예술품</div>
+                        </div>
+                        
+                        <h3>싫어하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">당신의 오만함(실제일수도, 망상일수도)</div>
+                            <div class="chip">시끄러운 인간 군중</div>
+                            <div class="chip">과소평가 받는 것</div>
+                            <div class="chip">인간 음식(단 것 제외)</div>
+                            <div class="chip">진실을 직면하는 것</div>
+                        </div>
+                        
+                        <h3>취미</h3>
+                        <div class="chip-container">
+                            <div class="chip">고대 엘프 텍스트 연구</div>
+                            <div class="chip">당신을 이기기 위한 전투 주문 연습</div>
+                            <div class="chip">수업 노트에 낙서하기</div>
+                            <div class="chip">달빛 명상</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="relationships">
+                        <ul>
+                            <li><strong>당신:</strong> 솔라리스 학원에서의 학업적, 개인적 라이벌. 엘타리온은 당신을 자신의 야망에 대한 위협이자 자신의 가치를 증명하기 위해 능가해야 할 짜증나는 기준으로 봅니다. 하지만 내면에서는 점점 복잡한 감정이 자라고 있습니다.</li>
+                            <li><strong>가족:</strong> 실버 레이크의 먼 친척들, 바엘타르 가문의 몰락 이후 흩어지고 쇠퇴했습니다. 그의 부모는 가문을 파멸시킨 분쟁에서 죽어 그가 마지막 진정한 상속자가 되었습니다.</li>
+                            <li><strong>학원 교수들:</strong> 그의 뛰어난 재능을 인정하지만, 엘프의 오만함에 대해 불만을 표시합니다. 특히 마법 교수는 그의 잠재력을 높이 평가합니다.</li>
+                            <li><strong>인간 학생들:</strong> 대부분 그를 냉담하고 접근하기 어려운 존재로 여기며, 그의 엘프 혈통에 대해 호기심과 약간의 경계심을 갖고 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="main-footer">
+        <p>© 2025 <a href="https://github.com/FantasyCharacters" target="_blank">FantasyCharacters</a>. 모든 권리 보유.</p>
+        <p>디시인사이드 <a href="https://gall.dcinside.com/mini/tincans" target="_blank">비공갤 깡피소</a>에서 배포됨</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 모든 탭 비활성화
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // 현재 탭 활성화
+                    this.classList.add('active');
+                    
+                    // 모든 콘텐츠 숨기기
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 선택된 탭 콘텐츠 표시
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

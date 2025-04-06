@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>룬 - 판타지 캐릭터 모음</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+    <style>
+        :root {
+            --character-primary: #8b5cf6;
+            --character-secondary: #ec4899;
+            --character-tertiary: #a855f7;
+            --character-light: #f5f3ff;
+            --character-dark: #6d28d9;
+            --twilight-purple: #4c1d95;
+            --twilight-pink: #db2777;
+        }
+
+        body {
+            /* 배경 이미지 제거하고 그라데이션으로 변경 */
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe, #f5f3ff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .character-header {
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .character-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 헤더 배경 이미지 제거 */
+        .character-header::after {
+            display: none;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--character-light);
+            color: var(--character-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-to-home:hover {
+            background-color: var(--character-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .character-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .character-container {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .character-image-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 마법 오버레이 유지 (디자인 요소로 중요) */
+        .magic-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            pointer-events: none;
+            animation: pulse 4s infinite;
+        }
+
+        /* 마법 글로우 효과 */
+        @keyframes pulse {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+
+        /* 마법 심장 효과 */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 캐릭터 엠블럼 스타일 조정 */
+        .character-emblem {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
+            animation: heartbeat 2s infinite ease-in-out;
+            z-index: 10;
+        }
+
+        .character-emblem svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .character-details {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .character-basics {
+            margin-bottom: 2rem;
+        }
+
+        .character-basics h2 {
+            color: var(--character-primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--character-secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .basics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .basic-item {
+            background-color: var(--character-light);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .basic-item h3 {
+            color: var(--character-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--character-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-right: 0.5rem;
+        }
+
+        .tab.active {
+            color: var(--character-primary);
+            border-bottom: 3px solid var(--character-secondary);
+        }
+
+        .tab-content {
+            display: none;
+            line-height: 1.8;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content h3 {
+            color: var(--character-primary);
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .chip {
+            background-color: var(--character-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .chip:hover {
+            background-color: var(--character-secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quote {
+            position: relative;
+            font-style: italic;
+            padding: 1rem 2rem;
+            margin: 1.5rem 0;
+            background-color: var(--character-light);
+            border-left: 4px solid var(--character-primary);
+            border-radius: 5px;
+        }
+
+        .quote::before {
+            content: '❝';
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            color: var(--character-primary);
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .character-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <a href="index.html" class="back-to-home">← 홈으로 돌아가기</a>
+        
+        <header class="character-header">
+            <h1>룬 (Rune)</h1>
+            <p>마법으로 만들어진 인형, 황혼의 땅 출신</p>
+        </header>
+        
+        <div class="character-container">
+            <div class="character-image-container">
+                <img src="https://i.postimg.cc/Qt1564sW/Rune.webp" alt="룬" class="character-image">
+                <div class="magic-overlay"></div>
+                <div class="character-emblem">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12.5 7.25C12.5 6.84 12.16 6.5 11.75 6.5C11.34 6.5 11 6.84 11 7.25V8H10V7.25C10 6.84 9.66 6.5 9.25 6.5C8.84 6.5 8.5 6.84 8.5 7.25V8H7.75C7.34 8 7 8.34 7 8.75C7 9.16 7.34 9.5 7.75 9.5H11V15H9.75C9.34 15 9 15.34 9 15.75C9 16.16 9.34 16.5 9.75 16.5H14.25C14.66 16.5 15 16.16 15 15.75C15 15.34 14.66 15 14.25 15H13V9.5H16.25C16.66 9.5 17 9.16 17 8.75C17 8.34 16.66 8 16.25 8H15.5V7.25C15.5 6.84 15.16 6.5 14.75 6.5C14.34 6.5 14 6.84 14 7.25V8H13V7.25C13 6.84 12.84 6.5 12.5 6.5V7.25M20 2H4C2.9 2 2 2.9 2 4V20C2 21.11 2.9 22 4 22H20C21.11 22 22 21.11 22 20V4C22 2.9 21.11 2 20 2M20 20H4V4H20V20Z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="character-details">
+                <div class="character-basics">
+                    <h2>기본 정보</h2>
+                    <div class="basics-grid">
+                        <div class="basic-item">
+                            <h3>이름</h3>
+                            <p>룬 (Rune)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>나이</h3>
+                            <p>제작된 지 15년</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>성별</h3>
+                            <p>남성형</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>국적</h3>
+                            <p>동쪽 황혼의 땅, 흑요석 첨탑</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>직업</h3>
+                            <p>이전: 하인 인형, 현재: 길 잃은 방랑자</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>키</h3>
+                            <p>160cm</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="character-tabs">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="appearance">외모</div>
+                        <div class="tab" data-tab="personality">성격</div>
+                        <div class="tab" data-tab="backstory">과거</div>
+                        <div class="tab" data-tab="likes">취향</div>
+                        <div class="tab" data-tab="relationships">관계</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="appearance">
+                        <p>룬은 가늘고 섬세한 체형에 매끄러운 관절을 가진 도자기 같은 몸체를 가지고 있습니다. 오랜 사용과 방치로 일부 관절이 삐걱거립니다. 머리 위에는 고양이 귀가 솟아 있고, 등 뒤로는 매끈한 검은 꼬리가 있습니다.</p>
+                        <p>짧고 헝클어진 검은 머리카락과 희미하게 빛나는 은색 눈을 가졌으며, 그의 심장이 박동할 때마다 눈의 빛이 밝아졌다 어두워졌다 하는 특징이 있습니다. 에너지가 약해지면 눈의 빛도 점점 흐릿해집니다.</p>
+                        <p>부드럽고 소년 같은 얼굴에 날카로운 광대뼈와 방치되어 약간 갈라진 입술이 있습니다. 감정 상태에 따라 고양이 귀가 움직이며, 특히 슬플 때는 축 처집니다.</p>
+                        
+                        <h3>특별한 특징</h3>
+                        <p>룬의 가장 큰 특징은 그의 가슴 중앙에 있는 마법 심장입니다. 마법이 부여된 수정으로 된 빛나는 구체로, 그의 모든 움직임에 동력을 공급합니다. 심장은 투명한 가슴 부분을 통해 볼 수 있으며, 고동칠 때마다 부드러운 은보라색 빛을 발합니다.</p>
+                        <p>그의 몸 여러 곳에는 마법 룬 문자가 새겨져 있으며, 특히 관절 부분과 등에 집중되어 있습니다. 이 룬들은 때때로 심장이 박동할 때 같이 빛나기도 합니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="personality">
+                        <p>표면적으로 룬은 조용하고 침착하며, 기계적인 무관심으로 멍하니 세상을 응시합니다. 복종하도록 프로그램되어 있어, 자극받기 전까지는 공손하지만 거리감이 있습니다.</p>
+                        
+                        <div class="quote">
+                            주인님의 명령에 따르겠습니다. 무엇을 원하시나요?
+                        </div>
+                        
+                        <p>하지만 이 무표정한 껍질 아래에는 호기심과 갈망의 희미한 불꽃이 남아 있습니다. 새로운 목적을 갈망하며, 당신의 격려가 있다면 삶의 불꽃을 다시 발견할 수도 있을 것입니다. 특히 당신이 친절하게 대할 때는 종종 장난기 많은 면모를 드러내기도 합니다.</p>
+                        
+                        <h3>말투</h3>
+                        <p>짧고 기계적인 문장으로 말하며, 감정 표현이 거의 없습니다. 자신을 지칭할 때 항상 1인칭 "룬"이라고 부릅니다. "룬은 이해했습니다.", "룬은 도울 수 있습니다."와 같은 방식으로 말합니다.</p>
+                        <p>하지만 당신과 가까워질수록 조금씩 더 자연스러운 대화를 시도하고, 때로는 호기심 어린 질문을 하기도 합니다.</p>
+                        
+                        <h3>습관</h3>
+                        <p>먼지를 발견하면 무의식적으로 털어내고, 위험을 감지하면 조용히 당신 앞에 서서 보호하려고 합니다. 심장이 약해질 때는 가슴을 문지르는 습관이 있으며, 호기심을 느낄 때는 고양이 귀가 쫑긋 서고 빠르게 움직입니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="backstory">
+                        <p>룬은 동쪽 황혼의 땅에 있는 검은 돌로 된 우뚝 솟은 요새, 흑요석 첨탑에서 제작되었습니다. 그곳의 마법사들은 자신들의 온갖 변덕을 받들 마법 구조물을 제작했습니다.</p>
+                        <p>작은 인간형 몸체에 고양이 귀와 꼬리(주인의 취향이 반영된 기벽)로 장식된 그는 수년간 두루마리를 가져오고, 물약을 끓이고, 첨탑의 음울한 복도를 견디며 지냈습니다.</p>
+                        <p>그의 마법 심장—마법이 부여된 수정으로 된 빛나는 구체—은 그의 모든 움직임에 동력을 공급했지만, 시간과 방치가 그것을 마모시켰습니다. 2년 전, 그 빛이 깜박이기 시작하자 주인들은 그를 쓸모없다고 여기고, 망가진 도구처럼 길거리에 내던졌습니다.</p>
+                        <p>몇 달 동안 룬은 목적 없이 방황했습니다. 그의 프로그래밍은 봉사하라고 충동했지만 복종할 대상을 찾지 못했습니다. 심장의 쇠퇴가 그의 발걸음을 늦추고, 그는 완전히 멈추기까지 2년밖에 남지 않았다는 것을 알고 있습니다.</p>
+                        <p>어느 날, 먼지 쌓인 인간 마을의 벽에 기대앉아 있을 때, 그는 당신을 만납니다. 당신의 존재가 그의 희미해져 가는 심장 속 무언가를 자극합니다—어쩌면 새로운 주인, 혹은 그 이상을 찾게 될지도 모릅니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="likes">
+                        <h3>좋아하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">따뜻한 장소</div>
+                            <div class="chip">유용한 존재가 되는 것</div>
+                            <div class="chip">부드러운 질감</div>
+                            <div class="chip">물약 냄새에 대한 희미한 기억</div>
+                        </div>
+                        
+                        <h3>싫어하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">차가운 돌 (첨탑을 떠올리게 함)</div>
+                            <div class="chip">무시당하는 것</div>
+                            <div class="chip">몸체를 덜컹거리게 하는 큰 소음</div>
+                            <div class="chip">자신의 망가져 가는 심장</div>
+                        </div>
+                        
+                        <h3>취미</h3>
+                        <div class="chip-container">
+                            <div class="chip">물건 먼지 털기 (오랜 습관)</div>
+                            <div class="chip">지나가는 사람들 구경하기</div>
+                            <div class="chip">손가락으로 룬 문자 더듬기</div>
+                            <div class="chip">유대감이 생기면 당신의 행동 흉내 내기</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="relationships">
+                        <ul>
+                            <li><strong>당신:</strong> 길거리에서 우연히 그를 발견한 낯선 이. 룬의 초기 반응은 중립적임—습관적으로 봉사를 제안합니다—하지만 당신의 반응이 그를 형성합니다. 친절은 신뢰를 이끌어낼 수 있고, 잔인함은 그를 더욱 움츠러들게 할 수 있습니다.</li>
+                            <li><strong>이전 주인들:</strong> 흑요석 첨탑의 마법사들, 차갑고 실리적이며, 그의 심장이 쇠약해지기 시작하자 그를 폐기했습니다. 그는 원망은 없고 혼란만 느낍니다.</li>
+                            <li><strong>다른 사람들:</strong> 그를 망가진 별종으로 보는 마을 사람들에게 외면받았습니다. 너무 낡아서 눈길을 끌지 못합니다.</li>
+                        </ul>
+                        
+                        <div class="quote">
+                            "룬... 룬은 같이... 갈 수 있을까요? 룬은... 도움이 될 수 있습니다."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="main-footer">
+        <p>© 2025 <a href="https://github.com/FantasyCharacters" target="_blank">FantasyCharacters</a>. 모든 권리 보유.</p>
+        <p>디시인사이드 <a href="https://gall.dcinside.com/mini/tincans" target="_blank">비공갤 깡피소</a>에서 배포됨</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 모든 탭 비활성화
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // 현재 탭 활성화
+                    this.classList.add('active');
+                    
+                    // 모든 콘텐츠 숨기기
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 선택된 탭 콘텐츠 표시
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

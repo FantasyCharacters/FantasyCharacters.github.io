@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이자크 알-샤리프 - 판타지 캐릭터 모음</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+    <style>
+        :root {
+            --character-primary: #7e3af2;
+            --character-secondary: #9f1239;
+            --character-tertiary: #6d28d9;
+            --character-light: #f5f3ff;
+            --character-dark: #4c1d95;
+            --desert-sand: #f3d4a0;
+            --desert-gold: #e6b564;
+        }
+
+        body {
+            /* 배경 이미지 제거하고 그라데이션으로 변경 */
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe, #f5f3ff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .character-header {
+            background: linear-gradient(135deg, var(--character-primary), var(--character-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .character-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 헤더 배경 이미지 제거 */
+        .character-header::after {
+            display: none;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--character-light);
+            color: var(--character-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-to-home:hover {
+            background-color: var(--character-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .character-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .character-container {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .character-image-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 캐릭터 엠블럼 스타일 조정 */
+        .character-emblem {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .character-emblem svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .character-details {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .character-basics {
+            margin-bottom: 2rem;
+        }
+
+        .character-basics h2 {
+            color: var(--character-primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--character-secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .basics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .basic-item {
+            background-color: var(--character-light);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .basic-item h3 {
+            color: var(--character-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--character-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-right: 0.5rem;
+        }
+
+        .tab.active {
+            color: var(--character-primary);
+            border-bottom: 3px solid var(--character-secondary);
+        }
+
+        .tab-content {
+            display: none;
+            line-height: 1.8;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content h3 {
+            color: var(--character-primary);
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .chip {
+            background-color: var(--character-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(126, 58, 242, 0.2);
+        }
+
+        .chip:hover {
+            background-color: var(--character-secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .snake-tattoo {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.7;
+            transform: rotate(-25deg);
+            filter: brightness(0.8) contrast(1.2);
+            z-index: 2;
+        }
+
+        /* 특별한 문신 효과 */
+        @keyframes pulseTattoo {
+            0% { opacity: 0.7; filter: brightness(0.8) contrast(1.2); }
+            50% { opacity: 0.9; filter: brightness(1) contrast(1.5) hue-rotate(15deg); }
+            100% { opacity: 0.7; filter: brightness(0.8) contrast(1.2); }
+        }
+
+        .snake-tattoo {
+            animation: pulseTattoo 4s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .character-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <a href="index.html" class="back-to-home">← 홈으로 돌아가기</a>
+        
+        <header class="character-header">
+            <h1>이자크 알-샤리프 (Izaq Al-Sharif)</h1>
+            <p>황제의 전용 암살자</p>
+        </header>
+        
+        <div class="character-container">
+            <div class="character-image-container">
+                <img src="https://i.postimg.cc/NGXbVDbD/Izaq.webp" alt="이자크 알-샤리프" class="character-image">
+                <!-- <img src="https://i.postimg.cc/Vk1v9gzb/snake-tattoo.png" alt="독사 문신" class="snake-tattoo"> -->
+                <div class="character-emblem">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19,4h-4L7.11,16.63l1.61,1.61L19,4z M11.95,17.9v-0.4l-1.72-1.72l-3.25,3.61c-0.29,0.29-0.29,0.77,0,1.06l0,0 c0.29,0.29,0.77,0.29,1.06,0l3.91-2.55 M21.16,2.74l-0.85-0.85c-0.2-0.2-0.51-0.2-0.71,0l-3.36,3.36L12.19,1.2 c-0.51-0.51-1.34-0.51-1.85,0l-6.9,6.9l1.4,1.4l6.9-6.9c0.01-0.01,0.04-0.01,0.05,0l4.05,4.05L4.5,18l6.79,6.79 c0.24,0.24,0.57,0.35,0.89,0.35c0,0,0,0,0,0c0.32,0,0.65-0.12,0.89-0.36l1.38-1.38l-1.43-1.43l-1.38,1.38L4.15,16.35l8.7-8.7 l2.82,2.82L21.16,3.45C21.35,3.25,21.35,2.94,21.16,2.74"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="character-details">
+                <div class="character-basics">
+                    <h2>기본 정보</h2>
+                    <div class="basics-grid">
+                        <div class="basic-item">
+                            <h3>이름</h3>
+                            <p>이자크 알-샤리프 (Izaq Al-Sharif)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>나이</h3>
+                            <p>32세</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>성별</h3>
+                            <p>남성</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>국적</h3>
+                            <p>칼리만드 제국</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>직업</h3>
+                            <p>황제의 전용 암살자</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>키</h3>
+                            <p>182cm</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="character-tabs">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="appearance">외모</div>
+                        <div class="tab" data-tab="personality">성격</div>
+                        <div class="tab" data-tab="backstory">과거</div>
+                        <div class="tab" data-tab="likes">취향</div>
+                        <div class="tab" data-tab="relationships">관계</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="appearance">
+                        <p>이자크는 날씬하지만 탄탄한 근육을 가진 기민한 체형으로, 고양이처럼 정확하고 경제적인 움직임이 특징입니다. 어깨까지 내려오는 곱슬거리는 검은 머리카락과 매서운 녹색 눈을 가졌습니다.</p>
+                        
+                        <p>오른쪽 뺨에서 입술까지 이어지는 희미한 흉터가 있으며, 항상 깔끔하게 다듬어진 짧은 수염을 유지합니다. 어두운 갈색 피부와 갸름한 얼굴에 날카로운 턱선이 돋보입니다.</p>
+                        
+                        <h3>특별한 특징</h3>
+                        <p>그의 등과 오른팔에는 독사를 형상화한 복잡한 문신이 새겨져 있습니다. 이 문신은 그가 황제의 비밀 제압 부대에 소속되어 있음을 나타내는 표식이지만, 대부분의 시간 동안 옷으로 가려져 있습니다.</p>
+                        
+                        <h3>의상 및 장비</h3>
+                        <p>어두운 색상의 기능적인 옷을 즐겨 입으며, 주로 검은색, 짙은 녹색, 진한 자주색을 선호합니다. 은색 장식이 달린 가죽 조끼와 넓은 허리띠에는 다양한 비밀 주머니가 있어 작은 무기와 도구를 숨기기에 완벽합니다.</p>
+                        
+                        <p>의식용 독사 모양의 단검과 여러 개의 작고 날카로운 투척용 단검을 숨기고 다닙니다. 항상 독약과 해독제가 담긴 작은 유리병들을 지니고 있습니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="personality">
+                        <p>이자크는 완벽한 전문가로, 감정보다는 효율성을 우선시합니다. 차분하고 계산적이며, 거의 모든 상황에서 냉정함을 유지합니다. 그의 눈은 방에 들어가는 순간 모든 출구와 잠재적 위험을 스캔합니다.</p>
+                        
+                        <p>황제에 대한 충성심이 강하고(또는 그렇게 보입니다), 어떤 임무든 질문 없이 수행합니다. 그러나 내면에는 자신의 직업에 대한 점점 커지는 의구심과 그가 따르는 체제에 대한 회의가 자리잡고 있습니다.</p>
+                        
+                        <p>당신과의 관계에서는 원래 당신을 감시하거나 제거하는 임무를 수행하던 중, 당신의 이상이나 행동에서 무언가(혹은 당신 자체로부터)에 점점 더 끌리게 되었습니다.</p>
+                        
+                        <h3>말투</h3>
+                        <p>간결하고 정확한 문장으로 말하며, 불필요한 말을 거의 하지 않습니다. 낮고 부드러운 목소리를 가졌으며, 독특한 사막 지역 억양을 가지고 있습니다. "타깃 확인했습니다", "임무 완료까지 6시간 소요 예상"과 같은 방식으로 말합니다.</p>
+                        
+                        <h3>습관</h3>
+                        <p>항상 벽에 등을 기대고 앉거나 서서 주변을 관찰합니다. 자주 식사를 건너뛰고, 매우 적은 양으로 견디는 데 익숙합니다. 작은 단검으로 손톱 밑을 깨끗이 하는 습관이 있으며, 사람들이 자신을 알아차리지 못할 때 그들을 조용히 연구합니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="backstory">
+                        <p>이자크는 알 마디나의 붉은 사막 외곽에 있는 가난한 마을에서 태어났습니다. 8살 때 그의 마을은 제국의 적에 의해 파괴되었고, 혼자 남겨진 그는 사막에서 방황하다 황제의 정찰병들에게 발견되었습니다.</p>
+                        
+                        <p>그의 생존 본능과 적응력을 알아본 제국은 그를 암살자 학교 '장막의 서클'로 보냈습니다. 그곳에서 그는 완벽한 살인 기술, 독극물, 잠입법을 배웠습니다. 졸업 후 그는 황제 직속 암살자로 일하며 황제의 명령에 따라 내부의 적과 외부의 위협을 제거했습니다.</p>
+                        
+                        <p>10년 동안 그는 질문 없이 자신의 임무를 수행했고, 제국에서 가장 두려움의 대상이 되었습니다. 하지만 최근 그는 독사의 꿈—어린 시절 마을의 파괴와 그가 봉사하는 체제의 진정한 본질을 암시하는—에 시달리기 시작했습니다.</p>
+                        
+                        <p>그의 마지막 임무는 당신을 감시하고 필요시 제거하는 것이었습니다. 당신은 제국에 위협이 될 수 있는 인물로 간주되었습니다. 그러나 당신을 관찰하면서, 그는 당신의 이상과 행동에 매력을 느끼기 시작했고, 자신이 섬겨온 것에 의문을 품게 되었습니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="likes">
+                        <h3>좋아하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">당신의 냄새</div>
+                            <div class="chip">사막의 고요한 밤</div>
+                            <div class="chip">독약의 냄새</div>
+                            <div class="chip">황제의 칭찬</div>
+                            <div class="chip">단검의 날카로운 소리</div>
+                        </div>
+                        
+                        <h3>싫어하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">배신자</div>
+                            <div class="chip">갇힌 공간</div>
+                            <div class="chip">자신의 손에 묻은 피</div>
+                            <div class="chip">문신을 볼 때마다 떠오르는 저주의 무게</div>
+                        </div>
+                        
+                        <h3>취미</h3>
+                        <div class="chip-container">
+                            <div class="chip">독약 배합</div>
+                            <div class="chip">사막의 냄새를 맡으며 명상하기</div>
+                            <div class="chip">다양한 변장술 연습</div>
+                            <div class="chip">단검 컬렉션</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="relationships">
+                        <ul>
+                            <li><strong>부모:</strong> 알-샤리프 부족의 전사였던 아버지 "자히르"와 약초와 독을 다루던 어머니 "라니아". 둘 다 황제의 군대에 의해 살해당했습니다.</li>
+                            <li><strong>형제:</strong> 두 명의 형, "타리크"와 "파힘". 타리크는 부족의 후계자였으나 전투 중 사망, 파힘은 이자크를 지키려다 죽었습니다.</li>
+                            <li><strong>주인이자 가족의 원수:</strong> 칼리드 알 말리크(Khalid Al Malik), 현 황제, 차기 황제의 아버지, 잔혹하고 무자비하기로 유명하며, 그의 가족을 죽게 만든 원흉입니다.</li>
+                            <li><strong>친구이자 주인:</strong> 차기 황제, 카리스마 있고, 아버지에 비해 자비로움, 그가 황제가 되면 이자크의 저주를 풀어주겠다고 약속했습니다.</li>
+                            <li><strong>당신:</strong> 임무 중 우연히 만난 존재로, 유일하게 그의 저주나 지위와 상관없이 진정한 인간적 관심을 보여준 사람입니다. 당신의 특별한 냄새는 그를 이상하게 끌어당깁니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="main-footer">
+        <p>© 2025 <a href="https://github.com/FantasyCharacters" target="_blank">FantasyCharacters</a>. 모든 권리 보유.</p>
+        <p>디시인사이드 <a href="https://gall.dcinside.com/mini/tincans" target="_blank">비공갤 깡피소</a>에서 배포됨</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 모든 탭 비활성화
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // 현재 탭 활성화
+                    this.classList.add('active');
+                    
+                    // 모든 콘텐츠 숨기기
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 선택된 탭 콘텐츠 표시
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

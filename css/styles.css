@@ -1,0 +1,524 @@
+/* 기본 변수 설정 */
+:root {
+    /* 메인 테마 색상 */
+    --primary-color: #3a2e39;
+    --secondary-color: #5c4d63;
+    --accent-color: #9f7e76;
+    --light-color: #f8f9fa;
+    --dark-color: #1a1a1a;
+    --background-color: #f0ede6;
+    
+    /* 캐릭터별 테마 색상 */
+    --paladin-primary: #1a56db;
+    --paladin-secondary: #f59e0b;
+    
+    --elf-primary: #10b981;
+    --elf-secondary: #6366f1;
+    
+    --assassin-primary: #7e3af2;
+    --assassin-secondary: #9f1239;
+    
+    --dragon-primary: #dd6b20;
+    --dragon-secondary: #1d4ed8;
+    
+    --doll-primary: #8b5cf6;
+    --doll-secondary: #ec4899;
+    
+    /* 그림자 효과 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* 폰트 설정 */
+    --font-main: 'Noto Sans KR', sans-serif;
+    --font-fantasy: 'Noto Sans KR', sans-serif;
+}
+
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--background-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* 이미지 배경을 그라데이션 색상으로 변경 */
+    background: linear-gradient(135deg, #f0ede6, #e6e0d4, #f0ede6);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+/* 그라데이션 애니메이션 */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* 헤더 스타일 */
+.main-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, 
+        var(--paladin-primary),
+        var(--elf-primary),
+        var(--assassin-primary),
+        var(--dragon-primary),
+        var(--doll-primary)
+    );
+    background-size: 200% 200%;
+    animation: rainbow 5s ease infinite;
+}
+
+/* 무지개 애니메이션 */
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 헤더에 추가적인 무지개 효과 */
+.main-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(26, 86, 219, 0.05),
+        rgba(16, 185, 129, 0.05),
+        rgba(126, 58, 242, 0.05),
+        rgba(221, 107, 32, 0.05),
+        rgba(139, 92, 246, 0.05)
+    );
+    background-size: 400% 400%;
+    animation: rainbow 8s ease infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.main-header h1, .main-header p {
+    position: relative;
+    z-index: 1;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.main-header .subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* 캐릭터 그리드 */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* 캐릭터 카드 */
+.character-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.character-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 카드 이미지 */
+.card-image {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.character-card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+/* 카드 엠블럼 */
+.card-emblem {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    bottom: -30px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* z-index 값을 높여 엠블럼이 항상 위에 표시되도록 함 */
+    box-shadow: var(--shadow-md);
+}
+
+.card-emblem svg {
+    width: 35px;
+    height: 35px;
+    fill: #ffffff;
+}
+
+/* 각 캐릭터별 엠블럼 스타일 */
+.paladin-emblem {
+    background: linear-gradient(135deg, var(--paladin-primary), var(--paladin-secondary));
+}
+
+.elf-emblem {
+    background: linear-gradient(135deg, var(--elf-primary), var(--elf-secondary));
+}
+
+.assassin-emblem {
+    background: linear-gradient(135deg, var(--assassin-primary), var(--assassin-secondary));
+}
+
+.dragon-emblem {
+    background: linear-gradient(135deg, var(--dragon-primary), var(--dragon-secondary));
+}
+
+.doll-emblem {
+    background: linear-gradient(135deg, var(--doll-primary), var(--doll-secondary));
+}
+
+/* 카드 콘텐츠 */
+.card-content {
+    padding: 1.5rem;
+    padding-bottom: 2rem;
+    position: relative; /* 위치 지정을 위해 추가 */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.card-subtitle {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+/* 캐릭터별 타이틀 색상 */
+[data-character="leon"] .card-title {
+    color: var(--paladin-primary);
+}
+
+[data-character="eltharion"] .card-title {
+    color: var(--elf-primary);
+}
+
+[data-character="izaq"] .card-title {
+    color: var(--assassin-primary);
+}
+
+[data-character="kael"] .card-title {
+    color: var(--dragon-primary);
+}
+
+[data-character="rune"] .card-title {
+    color: var(--doll-primary);
+}
+
+/* 카드 인용구 스타일 */
+.card-quote {
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    border-left: 3px solid;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    position: relative;
+    border-radius: 0 5px 5px 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-quote::before {
+    content: '❝';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.3rem;
+    font-size: 1.5rem;
+    opacity: 0.3;
+}
+
+.card-quote p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0; /* 인용구 내부 마진 제거 */
+}
+
+/* 캐릭터별 인용구 스타일 */
+[data-character="leon"] .card-quote {
+    border-left-color: var(--paladin-primary);
+}
+
+[data-character="eltharion"] .card-quote {
+    border-left-color: var(--elf-primary);
+}
+
+[data-character="izaq"] .card-quote {
+    border-left-color: var(--assassin-primary);
+}
+
+[data-character="kael"] .card-quote {
+    border-left-color: var(--dragon-primary);
+}
+
+[data-character="rune"] .card-quote {
+    border-left-color: var(--doll-primary);
+}
+
+/* 카드 정보 */
+.card-info {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* 정보 아이콘 스타일 */
+.info-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--secondary);
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* 캐릭터별 아이콘 색상 */
+[data-character="leon"] .info-icon {
+    fill: var(--paladin);
+}
+
+[data-character="eltharion"] .info-icon {
+    fill: var(--elf);
+}
+
+[data-character="izaq"] .info-icon {
+    fill: var(--assassin);
+}
+
+[data-character="kael"] .info-icon {
+    fill: var(--dragon);
+}
+
+[data-character="rune"] .info-icon {
+    fill: var(--doll);
+}
+
+/* 태그 스타일 */
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+/* 문단 간격 개선 스타일 */
+.tab-content p {
+    margin-bottom: 1.5rem;
+}
+
+.tab-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* 캐릭터별 태그 호버 효과 */
+[data-character="leon"] .tag:hover {
+    background-color: var(--paladin-primary);
+    color: white;
+}
+
+[data-character="eltharion"] .tag:hover {
+    background-color: var(--elf-primary);
+    color: white;
+}
+
+[data-character="izaq"] .tag:hover {
+    background-color: var(--assassin-primary);
+    color: white;
+}
+
+[data-character="kael"] .tag:hover {
+    background-color: var(--dragon-primary);
+    color: white;
+}
+
+[data-character="rune"] .tag:hover {
+    background-color: var(--doll-primary);
+    color: white;
+}
+
+/* 캐릭터 상세 페이지 스타일 */
+.character-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* 상세 페이지 엠블럼 위치 조정 */
+.character-image-container .character-emblem {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    bottom: 15px; /* 위치 수정 */
+    right: 15px; /* 위치 수정 */
+    z-index: 10; /* z-index 값을 높여 항상 위에 표시되도록 함 */
+}
+
+/* 캐릭터 상세 페이지 - 관계 목록의 글머리 기호를 대시(-)로 변경 */
+.tab-content#relationships ul {
+    list-style-type: none;
+    padding-left: 1.2rem;
+}
+
+.tab-content#relationships li {
+    position: relative;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.tab-content#relationships li::before {
+    content: "–";  /* 대시 기호 */
+    position: absolute;
+    left: -1rem;
+    color: var(--secondary-color);
+}
+
+/* 푸터 스타일 */
+.main-footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: var(--shadow-md);
+}
+
+.main-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.main-footer a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* 미디어 쿼리 - 반응형 디자인 */
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 2rem;
+    }
+    
+    .character-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .card-image {
+        height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .main-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-image {
+        height: 250px;
+    }
+} 

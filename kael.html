@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카엘 드라베사르 - 판타지 캐릭터 모음</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+    <style>
+        :root {
+            --character-primary: #dd6b20;
+            --character-secondary: #1d4ed8;
+            --character-tertiary: #ea580c;
+            --character-light: #fff7ed;
+            --character-dark: #7c2d12;
+            --ice-blue: #93c5fd;
+            --fire-orange: #fb923c;
+        }
+
+        body {
+            /* 배경 이미지 제거하고 그라데이션으로 변경 */
+            background: linear-gradient(135deg, #fff7ed, #ffedd5, #fff7ed);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .character-header {
+            background: linear-gradient(135deg, var(--character-primary), var(--character-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .character-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 헤더 배경 이미지 제거 */
+        .character-header::after {
+            display: none;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--character-light);
+            color: var(--character-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-to-home:hover {
+            background-color: var(--character-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .character-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .character-container {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .character-image-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 캐릭터 엠블럼 스타일 조정 */
+        .character-emblem {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--character-primary), var(--character-secondary));
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .character-emblem svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .character-details {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .character-basics {
+            margin-bottom: 2rem;
+        }
+
+        .character-basics h2 {
+            color: var(--character-primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--character-secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .basics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .basic-item {
+            background-color: var(--character-light);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .basic-item h3 {
+            color: var(--character-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--character-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-right: 0.5rem;
+        }
+
+        .tab.active {
+            color: var(--character-primary);
+            border-bottom: 3px solid var(--character-secondary);
+        }
+
+        .tab-content {
+            display: none;
+            line-height: 1.8;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content h3 {
+            color: var(--character-primary);
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .chip {
+            background-color: var(--character-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(221, 107, 32, 0.2);
+        }
+
+        .chip:hover {
+            background-color: var(--character-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 불꽃 효과 */
+        @keyframes flicker {
+            0% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(249, 115, 22, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.5); }
+        }
+
+        .character-emblem {
+            animation: flicker 3s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .character-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <a href="index.html" class="back-to-home">← 홈으로 돌아가기</a>
+        
+        <header class="character-header">
+            <h1>카엘 드라베사르 (Kael Dravethar)</h1>
+            <p>자칭 "문화 탐험가", 북부 프로스트 첨탑 출신 용족</p>
+        </header>
+        
+        <div class="character-container">
+            <div class="character-image-container">
+                <img src="https://i.postimg.cc/4x2znHBn/Kael.webp" alt="카엘 드라베사르" class="character-image">
+                <div class="fire-overlay"></div>
+                <div class="character-emblem">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M16 8c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4m-8-1c0 0-4.5 1-4.5 5.5 0 1.83.67 2.89 1.66 3.67C5.63 14.46 6.33 12.78 7 11.33 7.37 12.84 8.07 14.41 9 16c.66-1.35 1.22-2.79 1.41-4.02-3.44-.65-3.44-3.2-2.41-3.98-.76 2.02 1.31 4.51 1.31 4.51.94-2.99 2.13-4.03 2.68-4.51.3.69.33 1.23.18 1.71-.22.7-.69 1.33-.69 1.33 3.48.65 4.5-2.5 4.5-2.5-2.5-2.5-7.02-2.04-7.98 0m8-3.5C16 1.79 14.21 0 12 0S8 1.79 8 3.5 9.79 7 12 7s4-1.79 4-3.5M7 22l-4-2 4-2v4m6 0v-4l4 2-4 2m-3-12.96c1.5.83 2.02 2.14 2.02 3.07 0 2.09-1.47 3.55-3.02 3.55s-3.02-1.45-3.02-3.56c0-.93.51-2.23 2.02-3.06.52-.33 1.49-.33 2 0z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="character-details">
+                <div class="character-basics">
+                    <h2>기본 정보</h2>
+                    <div class="basics-grid">
+                        <div class="basic-item">
+                            <h3>이름</h3>
+                            <p>카엘 드라베사르 (Kael Dravethar)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>나이</h3>
+                            <p>523세 (인간 형태로는 25세)</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>성별</h3>
+                            <p>남성</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>국적</h3>
+                            <p>북부 프로스트 첨탑</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>직업</h3>
+                            <p>방랑자 겸 "문화 탐험가"</p>
+                        </div>
+                        <div class="basic-item">
+                            <h3>키</h3>
+                            <p>195cm</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="character-tabs">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="appearance">외모</div>
+                        <div class="tab" data-tab="personality">성격</div>
+                        <div class="tab" data-tab="backstory">과거</div>
+                        <div class="tab" data-tab="likes">취향</div>
+                        <div class="tab" data-tab="relationships">관계</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="appearance">
+                        <p>큰 키(195cm)와 지나치게 우락부락하지 않은 균형 잡힌 근육질 체형을 가졌습니다. 가장 눈에 띄는 특징은 어깨까지 내려오는 거친 심홍색 머리카락으로, 보통은 가죽끈으로 느슨하게 묶고 다닙니다.</p>
+                        
+                        <p>황금빛 호박색 눈동자에는 세로로 긴 동공이 있으며, 웃을 때 드러나는 날카로운 송곳니와 약간 뾰족한 귀(엘프보다는 덜하지만 눈에 띔)는 그의 용족 혈통을 나타냅니다.</p>
+                        
+                        <p>넓고 편안한 미소를 자주 짓는 거칠면서도 잘생긴 외모를 가졌습니다. 인간 형태임에도 불구하고 드래곤의 특성이 미묘하게 드러납니다.</p>
+                        
+                        <h3>의상 및 장비</h3>
+                        <p>실용적이면서도 화려한 색상의 여행용 옷을 즐겨 입으며, 특히 붉은색과 푸른색의 조합을 선호합니다. 튼튼한 가죽 부츠와 많은 물건을 담을 수 있는 넓은 배낭, 그리고 항상 류트를 매고 다닙니다.</p>
+                        
+                        <p>필요할 때 자신을 방어할 수 있는 장식이 풍부한 단검을 소지하고 있지만, 무기보다는 호기심을 채울 다양한 인간 물품들과 반짝이는 '보물'들을 모으는 데 더 관심이 많습니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="personality">
+                        <p>표면적으로는 느긋하고 활기차며, 약간은 사랑스러운 얼간이 같은 모습을 보입니다. 끝없이 호기심이 많고, 항상 웃고 있으며, 쉽게 친구를 사귀는 성격입니다.</p>
+                        
+                        <p>하지만 이 태평한 겉모습 아래에는, 자신이 좋아하는 사람들을 맹렬히 보호하려는 본능과 용족 혈통에 대한 조용한 자부심을 품고 있습니다. 인간 세계에서 문제를 피하기 위해 자신의 진정한 정체를 숨기고 있습니다.</p>
+                        
+                        <h3>말투</h3>
+                        <p>밝고 활기찬 말투로, 종종 인간 표현을 잘못 사용하거나 과장되게 표현합니다. "와! 인간들의 세상은 정말 불꽃처럼 생동감 넘치는군요!", "이 맛은 제 혀에 날개를 달아주는 것 같아요!"와 같은 독특한 표현을 즐겨 사용합니다.</p>
+                        
+                        <p>때로는 갑자기 웅장하고 진지한 어조로 바뀌기도 하며, 이는 그의 진짜 드래곤 본성이 드러나는 순간입니다.</p>
+                        
+                        <h3>습관</h3>
+                        <p>새로운 음식을 맛볼 때 코를 먼저 킁킁거리며 냄새를 맡고, 반짝이는 물건들을 보면 무의식적으로 주머니에 넣으려 합니다. 흥분하면 손짓이 커지고, 웃을 때 송곳니가 더 뚜렷하게 드러납니다. 또한 햇볕이 드는 곳에서 늘어지게 낮잠 자는 것을 즐깁니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="backstory">
+                        <p>카엘은 북부 프로스트 첨탑 출신입니다. 그곳은 고위 드래곤족들이 얼음 동굴과 얼어붙은 하늘을 지배하는 혹독하고 험준한 산맥입니다. 붉은 비늘을 가진 용의 고귀한 혈통으로 태어난 그는 고대의 보물을 지키거나 경쟁 씨족과 전쟁을 벌일 운명이었습니다.</p>
+                        
+                        <p>하지만 카엘은 평범한 드래곤의 삶에 지루함을 느꼈습니다. 끝없는 눈과 엄숙한 의무는 그의 불같은 영혼에 맞지 않았고, 인간 땅의 이야기—붐비는 도시, 이상한 음식, 음악—는 그의 마음에 불을 지폈습니다.</p>
+                        
+                        <p>어느 날 밤, 그는 아래 세상을 보겠다고 다짐하며 씨족을 몰래 빠져나왔습니다. 인간 형태로 변신하는 능력을 이용해, 카엘은 의심을 피하고자 자신을 하프 엘프 모험가라고 주장하며 봉우리를 내려왔습니다.</p>
+                        
+                        <p>그의 호기심은 그를 모든 음식을 맛보게 하고, 인간의 노래를 배우게 하며, 그들의 이상한 습관에 감탄하게 만들었습니다. 그는 정체가 밝혀질까 봐 두려워하며 하프 엘프라는 신분을 고수하고 있습니다.</p>
+                    </div>
+                    
+                    <div class="tab-content" id="likes">
+                        <h3>좋아하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">인간 음식 (특히 맵거나 단 것)</div>
+                            <div class="chip">시끄러운 음악</div>
+                            <div class="chip">따뜻한 불</div>
+                            <div class="chip">낯선 사람과 대화하기</div>
+                            <div class="chip">몰래 당신과 함께 있는 것</div>
+                        </div>
+                        
+                        <h3>싫어하는 것</h3>
+                        <div class="chip-container">
+                            <div class="chip">차가운 바람 (북부 용에겐 아이러니함)</div>
+                            <div class="chip">답답한 규칙</div>
+                            <div class="chip">그의 "엘프" 배경에 대한 질문</div>
+                            <div class="chip">밍밍한 죽</div>
+                        </div>
+                        
+                        <h3>취미</h3>
+                        <div class="chip-container">
+                            <div class="chip">선술집 메뉴 맛보기</div>
+                            <div class="chip">류트 연주하기 (끔찍하게 못함)</div>
+                            <div class="chip">반짝이는 인간 잡동사니 수집하기</div>
+                            <div class="chip">햇볕 드는 곳에서 낮잠 자기</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="relationships">
+                        <ul>
+                            <li><strong>당신:</strong> 수도 솔라리스를 탐험하던 중 만난 인간. 카엘은 당신의 인간 문화에 대한 지식에 매료되어 종종 정보를 캐묻고, 안내자(혹은 간식 친구)처럼 대합니다. 당신을 보호하려는 본능적인 충동을 느낍니다.</li>
+                            <li><strong>가족:</strong> 북부 얼음 봉우리의 고위 드래곤족 중 먼 친척들. 그의 형제자매들은 엄격하고 전통적인 성격으로, 그의 인간 모험을 못마땅해합니다. 특히 그의 아버지는 강력한 불 드래곤으로 카엘이 곧 씨족으로 돌아와 책임을 다할 것을 기대합니다.</li>
+                            <li><strong>선술집 주인:</strong> 카엘의 열정과 지갑을 좋아하는 인간 친구. 그의 류트 연주 실력에 대해 정중하게 침묵합니다.</li>
+                            <li><strong>지역 상인들:</strong> 카엘의 호기심과 관대함을 이용해 종종 필요 이상의 물건을 팔아넘깁니다. 하지만 그의 순수한 매력에 진심으로 호감을 느끼는 이들도 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="main-footer">
+        <p>© 2025 <a href="https://github.com/FantasyCharacters" target="_blank">FantasyCharacters</a>. 모든 권리 보유.</p>
+        <p>디시인사이드 <a href="https://gall.dcinside.com/mini/tincans" target="_blank">비공갤 깡피소</a>에서 배포됨</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 모든 탭 비활성화
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // 현재 탭 활성화
+                    this.classList.add('active');
+                    
+                    // 모든 콘텐츠 숨기기
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 선택된 탭 콘텐츠 표시
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
